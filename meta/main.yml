@@ -1,0 +1,13 @@
+dependencies: [ ]
+
+galaxy_info:
+  author: David Surey
+  description: Installs an MSSQL Server
+  license: MIT
+  min_ansible_version: 2.4
+  platforms:
+    - name: Windows
+      versions:
+      - 2016
+  galaxy_tags:
+    - database

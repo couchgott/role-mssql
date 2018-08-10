@@ -1,0 +1,50 @@
+---
+- name: create Temp folder
+  win_file:
+    path: "{{ rl_mssql_temp_folder }}"
+    state: directory
+
+- name: install SqlServerDsc DSC resource
+  win_psmodule:
+    name: SqlServerDsc
+    state: present
+
+- name: Install .net requirements
+  win_dsc:
+    resource_name: WindowsFeature
+    Name: "{{ item }}"
+    Ensure: Present
+  register: dotnetinst
+  with_items:
+    - NET-Framework-Core
+    - NET-Framework-45-Core
+
+- name: add runuser to Log on as a service for MSSQL
+  win_user_right:
+    name: SeServiceLogonRight
+    users: "{{ item.svcaccount }}"
+    action: add
+  with_items: 
+    - "{{ rl_mssql_instances }}"
+
+- name: download SQL Install Files
+  win_get_url:
+    url: "{{ item.repo }}/{{ item.name }}"
+    dest: "{{ rl_mssql_temp_folder }}"
+    force: no
+  with_items: 
+    - "{{ rl_mssql_iso_source }}"
+    - "{{ rl_mssql_ssms_source }}" 
+
+- name: mount SQL Iso
+  win_disk_image:
+    image_path: '{{ rl_mssql_temp_folder }}\{{ item.name }}'
+    state: present
+  register: disk_image_out
+  with_items: 
+    - "{{ rl_mssql_iso_source }}"
+
+- name: Wait for Iso to mount
+  pause:
+    minutes: 1
+  when: disk_image_out.changed

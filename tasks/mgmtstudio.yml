@@ -1,0 +1,11 @@
+---
+- name: Install SQL Management Studio
+  win_package:
+    path: '{{ rl_mssql_temp_folder }}\{{ item.name }}'
+    product_id: "{{ item.product_id }}"
+    arguments: /install /passive /norestart
+    state: present
+  with_items: 
+    - "{{ rl_mssql_ssms_source }}"
+  when: rl_mssql_install_ssms
+  ignore_errors: yes

@@ -1,0 +1,57 @@
+---
+- name: Install SQL Server
+  win_dsc:
+    resource_name: SqlSetup
+    InstanceName: "{{ item.instance_name }}"
+    Features: SQLENGINE
+    SQLCollation: "{{ item.instance_collation }}"
+    SQLSvcAccount_username: "{{ item.svcaccount }}"
+    SQLSvcAccount_password: "{{ item.svcpassword }}"
+    SQLSysAdminAccounts: "{{ item.svcaccount }}"
+    InstanceDir: "{{ item.instance_dir }}"
+    InstallSQLDataDir: "{{ item.installdb_path }}"
+    SQLUserDBDir: "{{ item.userldb_path }}"
+    SQLUserDBLogDir: "{{ item.userdblog_path }}"
+    SQLTempDBDir: "{{ item.tempdb_path }}"
+    SQLTempDBLogDir: "{{ item.tempdblog_path }}"
+    SQLBackupDir: "{{ item.backup_path }}"
+    SourcePath: "{{ disk_image_out.results[0].mount_path }}"
+    UpdateEnabled: False
+    ForceReboot: False
+  with_items: 
+    - "{{ rl_mssql_instances }}"
+  when: not item.productkey is defined
+
+- name: Install SQL Server
+  win_dsc:
+    resource_name: SqlSetup
+    InstanceName: "{{ item.instance_name }}"
+    Features: SQLENGINE
+    SQLCollation: "{{ item.instance_collation }}"
+    SQLSvcAccount_username: "{{ item.svcaccount }}"
+    SQLSvcAccount_password: "{{ item.svcpassword }}"
+    SQLSysAdminAccounts: "{{ item.svcaccount }}"
+    InstanceDir: "{{ item.instance_dir }}"
+    InstallSQLDataDir: "{{ item.installdb_path }}"
+    SQLUserDBDir: "{{ item.userldb_path }}"
+    SQLUserDBLogDir: "{{ item.userdblog_path }}"
+    SQLTempDBDir: "{{ item.tempdb_path }}"
+    SQLTempDBLogDir: "{{ item.tempdblog_path }}"
+    SQLBackupDir: "{{ item.backup_path }}"
+    SourcePath: "{{ disk_image_out.results[0].mount_path }}"
+    UpdateEnabled: False
+    ForceReboot: False
+    ProductKey: "{{ item.productkey }}"
+  with_items: 
+    - "{{ rl_mssql_instances }}"
+  when: item.productkey is defined
+
+- name: configure Firwall for SQL 
+  win_dsc: 
+    resource_name: SqlWindowsFirewall
+    Features: SQLENGINE
+    InstanceName: "{{ item.instance_name }}"
+    Ensure: Present
+    SourcePath: "{{ disk_image_out.results[0].mount_path }}"
+  with_items: 
+    - "{{ rl_mssql_instances }}"

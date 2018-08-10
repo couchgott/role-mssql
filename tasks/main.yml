@@ -1,0 +1,26 @@
+---
+- name: check and install required system components
+  include_tasks: prerequisites.yml
+
+- name: install the mssql server instance 
+  include_tasks: install.yml
+
+- name: handle SQL databases
+  include_tasks: databases.yml
+  loop_control:
+    loop_var: outer_item
+  with_items:
+   - "{{ rl_mssql_instances }}"
+
+- name: handle SQL permissions
+  include_tasks: permissions.yml
+  loop_control:
+    loop_var: outer_item
+  with_items:
+   - "{{ rl_mssql_instances }}"
+
+- name: install the SQL Managament Studio
+  include_tasks: mgmtstudio.yml
+
+- name: cleanup the install files 
+  include_tasks: cleanup.yml

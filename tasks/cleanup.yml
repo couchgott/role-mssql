@@ -1,0 +1,15 @@
+---
+- name: unmount SQL iso
+  win_disk_image:
+    image_path: '{{ rl_mssql_temp_folder }}\{{ item.name }}'
+    state: absent
+  with_items: 
+    - "{{ rl_mssql_iso_source }}"
+  
+- name: delete source files
+  win_file:
+    path: '{{ rl_mssql_temp_folder }}\{{ item.name }}'
+    state: absent
+  with_items: 
+    - "{{ rl_mssql_iso_source }}"
+    - "{{ rl_mssql_ssms_source }}"

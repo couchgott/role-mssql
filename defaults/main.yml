@@ -1,0 +1,35 @@
+---
+rl_mssql_temp_folder: C:\Temp
+rl_mssql_install_ssms: false
+rl_mssql_iso_source:
+  - name: SW_DVD9_NTRL_SQL_Svr_Standard_Edtn_2017_64Bit_English_OEM_VL_X21-56945.ISO
+    #repo:
+    #productkey: 
+    
+rl_mssql_ssms_source: 
+  - name: SSMS-Setup-ENU.exe 
+    #repo: 
+    product_id: 4A144470-B2E3-4614-8AAC-370A0C80C919
+    arguments: /install /passive /norestart
+
+rl_mssql_instances:
+  - instance_name: MSSQLSERVER
+    features: SQLENGINE
+    instance_collation: SQL_Latin1_General_CP1_CI_AS
+    sysadmins: 
+      - "{{ inventory_hostname_short }}\\{{ ansible_user }}"
+    sqlusers: 
+      - "{{ inventory_hostname_short }}\\{{ ansible_user }}"
+    setupadmins: 
+      - "{{ inventory_hostname_short }}\\{{ ansible_user }}"
+    svcaccount: "{{ inventory_hostname_short }}\\{{ ansible_user }}"
+    svcpassword: "{{ ansible_password }}"
+    instance_dir: C:\Program Files\Microsoft SQL Server
+    installdb_path: C:\Program Files\Microsoft SQL Server\MSSQLSERVER\MSSQL\Data
+    userldb_path: C:\Program Files\Microsoft SQL Server\MSSQLSERVER\MSSQL\Data
+    userdblog_path: C:\Program Files\Microsoft SQL Server\MSSQLSERVER\MSSQL\Data
+    tempdb_path: C:\Program Files\Microsoft SQL Server\MSSQLSERVER\MSSQL\Data
+    tempdblog_path: C:\Program Files\Microsoft SQL Server\MSSQLSERVER\MSSQL\Data
+    backup_path: C:\Program Files\Microsoft SQL Server\MSSQLSERVER\MSSQL\Backup
+    databases: 
+      - rl_mssql_db
