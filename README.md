@@ -8,9 +8,9 @@ Requirements
 ---------------
 
 Ansible >= 2.5.x
-Windows Server ab 2012R2
-Die ISO des MSSQL Servers ab Version 2014
-Das EXE Install Paket des SSMS 
+Windows Server from 2012R2
+MSSQL Server install ISO version >= 2014
+SSMS EXE install package
 
 Source (ISO Packages) should be in place. 
 
