@@ -2,7 +2,7 @@ dependencies: [ ]
 
 galaxy_info:
   author: David Surey
-  description: Installs an MSSQL Server
+  description: Installs an MSSQL Server on Windows Server Systems
   license: MIT
   min_ansible_version: 2.5
   platforms:
