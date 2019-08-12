@@ -9,14 +9,14 @@
   include_tasks: databases.yml
   loop_control:
     loop_var: outer_item
-  with_items:
+  loop:
    - "{{ rl_mssql_instances }}"
 
 - name: handle SQL permissions
   include_tasks: permissions.yml
   loop_control:
     loop_var: outer_item
-  with_items:
+  loop:
    - "{{ rl_mssql_instances }}"
 
 - name: install the SQL Managament Studio

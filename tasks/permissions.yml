@@ -7,7 +7,7 @@
     LoginType: WindowsGroup
     ServerName: .
     InstanceName: "{{ outer_item.instance_name }}"
-  with_items: 
+  loop: 
     - "{{ outer_item.sysadmins }}"
   when: outer_item.sysadmins is defined
 
@@ -19,7 +19,7 @@
     LoginType: WindowsGroup
     ServerName: .
     InstanceName: "{{ outer_item.instance_name }}"
-  with_items:
+  loop:
     - "{{ outer_item.sqlusers }}"
   when: outer_item.sqlusers is defined
 
@@ -31,7 +31,7 @@
     LoginType: WindowsGroup
     ServerName: .
     InstanceName: "{{ outer_item.instance_name }}"
-  with_items: 
+  loop: 
     - "{{ outer_item.setupadmins }}"
   when: outer_item.setupadmins is defined
 
@@ -43,7 +43,7 @@
     MembersToInclude: "{{ item }}"
     ServerName: .
     InstanceName: "{{ outer_item.instance_name }}"
-  with_items: 
+  loop: 
     - "{{ outer_item.sysadmins }}"
   when: outer_item.sysadmins is defined
 
@@ -55,7 +55,7 @@
     MembersToInclude: "{{ item }}"
     ServerName: .
     InstanceName: "{{ outer_item.instance_name }}"
-  with_items: 
+  loop: 
     - "{{ outer_item.setupadmins }}"
   when: outer_item.setupadmins is defined
 
@@ -67,7 +67,7 @@
     MembersToInclude: "{{ item }}"
     ServerName: .
     InstanceName: "{{ outer_item.instance_name }}"
-  with_items: 
+  loop: 
     - "{{ outer_item.setupadmins }}"
   when: outer_item.setupadmins is defined
 

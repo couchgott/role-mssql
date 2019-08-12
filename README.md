@@ -7,7 +7,7 @@ optionally sets up databases and permissions
 Requirements
 ---------------
 
-Ansible >= 2.5.x
+Ansible >= 2.7.x
 Windows Server from 2012R2
 MSSQL Server install ISO version >= 2014
 SSMS EXE install package

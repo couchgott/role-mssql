@@ -15,7 +15,7 @@
     Name: "{{ item }}"
     Ensure: Present
   register: dotnetinst
-  with_items:
+  loop:
     - NET-Framework-Core
     - NET-Framework-45-Core
 
@@ -24,7 +24,7 @@
     name: SeServiceLogonRight
     users: "{{ item.svcaccount }}"
     action: add
-  with_items: 
+  loop: 
     - "{{ rl_mssql_instances }}"
 
 - name: download SQL Install Files
@@ -32,7 +32,7 @@
     url: "{{ item.repo }}/{{ item.name }}"
     dest: "{{ rl_mssql_temp_folder }}"
     force: no
-  with_items: 
+  loop: 
     - "{{ rl_mssql_iso_source }}"
     - "{{ rl_mssql_ssms_source }}" 
 
@@ -41,7 +41,7 @@
     image_path: '{{ rl_mssql_temp_folder }}\{{ item.name }}'
     state: present
   register: disk_image_out
-  with_items: 
+  loop: 
     - "{{ rl_mssql_iso_source }}"
 
 - name: Wait for Iso to mount

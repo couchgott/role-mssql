@@ -5,7 +5,7 @@
     product_id: "{{ item.product_id }}"
     arguments: /install /passive /norestart
     state: present
-  with_items: 
+  loop: 
     - "{{ rl_mssql_ssms_source }}"
   when: rl_mssql_install_ssms
   ignore_errors: yes

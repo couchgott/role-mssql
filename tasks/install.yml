@@ -18,7 +18,7 @@
     SourcePath: "{{ disk_image_out.results[0].mount_path }}"
     UpdateEnabled: False
     ForceReboot: False
-  with_items: 
+  loop: 
     - "{{ rl_mssql_instances }}"
   when: not item.productkey is defined
 
@@ -42,7 +42,7 @@
     UpdateEnabled: False
     ForceReboot: False
     ProductKey: "{{ item.productkey }}"
-  with_items: 
+  loop: 
     - "{{ rl_mssql_instances }}"
   when: item.productkey is defined
 
@@ -53,5 +53,5 @@
     InstanceName: "{{ item.instance_name }}"
     Ensure: Present
     SourcePath: "{{ disk_image_out.results[0].mount_path }}"
-  with_items: 
+  loop: 
     - "{{ rl_mssql_instances }}"
